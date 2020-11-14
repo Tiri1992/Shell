@@ -326,7 +326,7 @@ Hannah 23 95
 
 And we want to count those rows which have 4 fields and take an average of those values in the 4th field.
 
-`#Variable.Fields.awk`
+`#VariableFields.awk`
 
 ```awk
 #!/usr/bin/awk -f
@@ -358,4 +358,30 @@ Output:
 ```sh
    COUNT   8
  AVERAGE  50
+```
+
+Alternatively, we might want to exit the program if we find an input line with less than 4 fields. This might help to prevent any bugs when running our program.
+
+Using the same dataset as above we run the following script.
+
+`#ExitWithBadData.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# This program will exit if it finds less than 4 fields in a input line
+{
+	if (NF < 4) {
+		print "Exiting program...";
+		exit
+	}
+	print $0;
+}
+```
+
+Output:
+
+```sh
+Mark 80 38 40
+Exiting program...
 ```
