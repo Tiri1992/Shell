@@ -352,3 +352,10 @@ END {
 	printf("%8s %3d\n", "AVERAGE", fourthFieldSum/fourthFieldCount);
 }
 ```
+
+Output:
+
+```sh
+   COUNT   8
+ AVERAGE  50
+```
