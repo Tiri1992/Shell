@@ -295,3 +295,13 @@ BEGIN {
 	print $1, $2, $3;
 }
 ```
+Output:
+
+```sh
+James,50,39
+Alex,96,58
+Harry,33,52
+Anna,59,63
+Emma,93,23
+Chris,43,75
+```
