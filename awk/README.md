@@ -95,3 +95,20 @@ The square of 8 is 64
 The square of 9 is 81
 The square of 10 is 100
 ```
+
+Same thing but using a for loop is more concise.
+
+`#CalculationFor.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Using a FOR loop to construct the squares of the numbers 1 to 10
+BEGIN {
+		for (i = 1; i <= 10; i++) {
+				# Format the numbers using printf
+				printf("The square of %d is %d\n", i, i ^ 2);
+		}
+}
+
+```
