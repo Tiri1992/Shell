@@ -264,3 +264,34 @@ BEGIN {
 	print $1
 }
 ```
+
+Output:
+
+```sh
+James
+Alex
+Harry
+Anna
+Emma
+Chris
+```
+
+Another common scenario is if we have a file with a different delimiter than we want. Well use the same file about (with ":", "-") delimiters, but change them to a csv ",".
+
+We use the `OFS` output field separator to do this.
+
+`#ChangeOutputDelim.awk`
+```awk
+#!/usr/bin/awk -f
+
+# We can change the output delim into a comma (csv)
+BEGIN {
+	# Declare many different field sep as an input
+	FS="[:-]";
+	# One output
+	OFS=",";
+}
+{
+	print $1, $2, $3;
+}
+```
