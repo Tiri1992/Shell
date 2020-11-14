@@ -233,3 +233,34 @@ V
 VI
 VII
 ```
+
+Dealing with multiple delimiters, we can specify a character set inside the `FS` argument.
+
+Heres an example of some data with different delimiters.
+
+`#data/changeDelimiters.data`
+
+```sh
+James:50:39
+Alex:96:58
+Harry-33-52
+Anna-59-63
+Emma:93:23
+Chris:43:75
+```
+
+To get the names (first column) of each input line.
+
+`#HardDelimiter.awk`
+
+```awk
+#!/usr/bin/awk -f
+BEGIN { 
+	# Specify character set of delimiters
+	FS="[:-]";
+}
+{
+	# Print the first column (Names)
+	print $1
+}
+```
