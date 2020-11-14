@@ -305,3 +305,50 @@ Anna,59,63
 Emma,93,23
 Chris,43,75
 ```
+
+Another data situation is where we have different number of fields per row/record. The following dataset has a mix of 3 or 4 fields.
+
+`#data/diffFields.data`
+
+```sh
+Mark 80 38 40
+James 49 30
+Chris 44 39 20
+Anna 33 49
+Rachel 55 94 39
+Harry 48 38 55
+Mike 57 48 39
+Nick 69 30 95
+Michael 49 64 43
+Natalie 42 54 71
+Hannah 23 95
+```
+
+And we want to count those rows which have 4 fields and take an average of those values in the 4th field.
+
+`#Variable.Fields.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Count the number of records with 4 fields
+# Compute the average of the fourth field
+BEGIN {
+	FS=" ";
+	# Declare variables
+	fourthFieldCount = 0;
+	fourthFieldSum = 0;
+}
+{
+	# NF = Number of fields
+	if (NF == 4) {
+		fourthFieldCount += 1;
+		fourthFieldSum += $4;
+	}
+}
+END {
+	# Print the count and average (where the fourth column exists)
+	printf("%8s %3d\n", "COUNT", fourthFieldCount);
+	printf("%8s %3d\n", "AVERAGE", fourthFieldSum/fourthFieldCount);
+}
+```
