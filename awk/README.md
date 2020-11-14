@@ -182,3 +182,54 @@ Output:
    Miranda       49       73
    AVERAGE       55       60
 ```
+
+Changing the delimiter for each line input as we read in. Suppose we have the following dataset with different delimiters.
+
+`#data/badDelimiters.csv`
+
+```sh
+ONE 1 I
+TWO 2 II
+#START
+THREE:3:III
+FOUR:4:IV
+FIVE:5:V
+#STOP
+SIX 6 VI
+SEVEN 7 VII
+```
+
+We want to change the delimiter every time we reach either `#STAR` or `#STOP`.
+
+`#VariableDelimiter.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# We can change the delimiter depending on the input record
+{
+	if ($1 == "#START") {
+		# Changes the delimiter to :
+		FS=":";
+	}
+	else if ($1 == "#STOP") {
+		# Changes the delimiter to " "
+			FS=" ";
+	} 
+	else {
+		# Print the Roman number in column 3
+		print $3
+	}
+}
+```
+Output the third field:
+
+```sh
+I
+II
+III
+IV
+V
+VI
+VII
+```
