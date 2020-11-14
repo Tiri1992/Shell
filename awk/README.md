@@ -288,7 +288,7 @@ We use the `OFS` output field separator to do this.
 BEGIN {
 	# Declare many different field sep as an input
 	FS="[:-]";
-	# One output
+	# Change output delimiter to , 
 	OFS=",";
 }
 {
