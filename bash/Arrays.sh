@@ -14,7 +14,33 @@ echo ${myarr[@]}
 declare -a decArr
 
 # and elements added in a ()
-decArr=(John Daniel James)
+decArr=(John Daniel James Anna)
 
 echo ${decArr[@]}
+
+# Number of characters in the first index of the array
+echo ${#decArr[1]}
+
+# Following example searches for James and replaced with Sotiri
+echo ${decArr[@]/James/Sotiri}
+
+# Slice an array starting at index 1 and select 2 elements (index 1,2)
+echo ${decArr[@]:1:2}
+
+# First 3 characters of the element at index 1
+echo ${decArr[1]:0:3}
+
+# Print new array
+echo ${decArr[@]}
+
+# Setup new array with countries
+countriesArr=('England' 'Germany' 'France' 'Italy')
+
+echo ${countriesArr[@]}
+
+# Add an element to countriesArr
+countriesArr=("${countriesArr[@]}" "Spain" "Greece")
+
+echo ${countriesArr[@]}
+
 
