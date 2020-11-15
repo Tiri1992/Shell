@@ -410,3 +410,76 @@ James 49 78
 Chris 32 86
 ```
 
+### Assigning arrays
+
+Arrays in awk are associative. This means indicies can take on both numerical and string types. Here is a simple example of declaring and adding values into an array, then printing the results.
+
+`#ArrayBasics.awk`
+
+```awk
+#!/usr/bin/awk -f 
+
+# Setting up an array. Arrays in awk are associative, i.e. indicies can be either str or numeric.
+BEGIN {
+	# Indicies as integers
+	myArray[1] = "one";
+	myArray[2] = "Two";
+	# Indicies as strings
+	myArray["name"] = "Michael";
+
+  # Print values
+	print myArray[1];
+	print myArray[2];
+	print myArray["name"];
+}
+```
+
+Output:
+
+```sh
+one
+Two
+Michael
+```
+
+Here is a more practical example of using an array. Suppose we have an input data with jumbled index and we want to sort the order.
+
+`#data/jumbled.data`
+
+```sh
+4 Sotiri
+6 Michael
+2 James
+5 Chris
+1 Anna
+3 Sophie
+```
+
+We can write an awk program that takes in as indices the first field `$1` and has values as the second field `$2`. Then run a for loop to print out the sorted order of the values in the second field:
+
+```awk
+#!/usr/bin/awk -f
+
+# We use an associative array to sort the order of our data
+{
+	sortArr[$1] = $2
+}
+END {
+	# Print in sorted order
+	for (i = 1; i <= NR; i++) {
+		print i, sortArr[i];
+	}
+}
+```
+
+Running the program against the data, we get the following output:
+
+```sh
+$ ./ArraySort.awk ../data/jumbled.data
+1 Anna
+2 James
+3 Sophie
+4 Sotiri
+5 Chris
+6 Michael
+```
