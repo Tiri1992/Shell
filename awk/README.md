@@ -483,3 +483,44 @@ $ ./ArraySort.awk ../data/jumbled.data
 5 Chris
 6 Michael
 ```
+Sometimes, we might not know in advance which index values are contain in the arrays. In this case we can do a simple check with a simple expression of `if (i in myArray)`.
+
+`#CheckArray.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Check to see if there are values in the array:
+# We may need to check before we leap with an IF statement
+BEGIN {
+	myArray[1] = "Alex";
+	myArray[3] = "Michael";
+	myArray[4] = "Jess";
+	myArray[5] = "Michelle";
+	myArray[7] = "Tom";
+
+# Loop over the integers 1-7 and check if values are indexes in myArray
+for (i = 1; i <= 7; i++){
+	if (i in myArray) {
+		printf("Array at index %1d has value %s\n", i, myArray[i]);
+	}
+  else {
+    # Let user know this index does not exist
+    printf("Array does not contain index %1d\n", i);
+  }
+}
+}
+```
+
+Running the program we get the following output:
+
+```sh
+$ ./ArrayChecks.awk
+Array at index 1 has value Alex
+Array does not contain index 2
+Array at index 3 has value Michael
+Array at index 4 has value Jess
+Array at index 5 has value Michelle
+Array does not contain index 6
+Array at index 7 has value Tom
+```
