@@ -593,3 +593,38 @@ samsung,3
 htc,1
 motorola,1
 ```
+
+### Builtin Functions
+
+#### Numeric builtin functions
+
+Here we look at the `grades.csv` and use some of the builtin numeric functions such as `sqrt()`, `int()` etc to transform the grades column.
+
+`#NumericBuiltin.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Explore the numeric built in functions available in awk
+# Apply the sqrt(), int(), exp() and rand() random number functions to the grades.csv
+BEGIN {
+	FS = ",";
+}
+{
+	printf("%8s Sqrt: %3d Int Sqrt: %3d, Exp: %3d, Random Number -> %3d\n", $1, sqrt($2), int(sqrt($2)), exp($2),rand() * 100);
+}
+```
+Running the program we get the following output:
+
+```sh
+./NumericBuiltin.awk ../data/grades.csv 
+ Michael Sqrt:   8 Int Sqrt:   8, Exp: -9223372036854775808, Random Number ->  84
+    John Sqrt:   7 Int Sqrt:   7, Exp: -9223372036854775808, Random Number ->  39
+    Anna Sqrt:   7 Int Sqrt:   7, Exp: -9223372036854775808, Random Number ->  78
+  Hannah Sqrt:   6 Int Sqrt:   6, Exp: 639843493530054912, Random Number ->  79
+    Mark Sqrt:   5 Int Sqrt:   5, Exp: 78962960182680, Random Number ->  91
+    Jane Sqrt:   8 Int Sqrt:   8, Exp: -9223372036854775808, Random Number ->  19
+    Emma Sqrt:   5 Int Sqrt:   5, Exp: 583461742527454, Random Number ->  33
+   Harry Sqrt:   8 Int Sqrt:   8, Exp: -9223372036854775808, Random Number ->  76
+ Miranda Sqrt:   7 Int Sqrt:   7, Exp: -9223372036854775808, Random Number ->  27
+```
