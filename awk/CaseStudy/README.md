@@ -1,6 +1,6 @@
 # CaseStudy: List of articles
 
-dataset can be found in `#data/articles.csv`.
+Dataset can be found in `articles.csv`.
 
 In this tutorial, we will aim to do data analysis in `awk` and combining all other shell tools such as `grep`, `cut`, `uniq`, `sort` etc.
 
@@ -72,3 +72,45 @@ $ ./AverageWordCount.awk articles.csv
 AVG WC   881
 ```
 
+We could make this slightly more complex. What if we wanted to know the average wordcount for those records which had a comment vs those without.
+
+```awk
+#!/usr/bin/awk -f
+
+# We look at comparing the avg word count with the rec with a comment vs without. $5 field contains comment count.
+
+BEGIN {
+	FS = ",";
+	# Declare counter
+	countComment = 0;
+	countNoComment = 0;
+}
+{
+	# Ignore First row:
+	if (NR == 1) {
+		# Skips row
+		next;
+	}
+	if ($5 > 0) {
+		# $NF will print last field, which is word count
+		countComment += $NF;
+		}
+	else if ($5 == 0) {
+		countNoComment += $NF;
+	}
+}
+END {
+	printf("%10s\n", "AVERAGE WC");
+	printf("%10s %5d\n", "COMMENT", countComment / NR);
+	printf("%10s %5d\n", "NO COMMENT", countNoComment / NR);
+}
+```
+
+Running the program we get the following output:
+
+```sh
+$ ./AverageWordCount.awk articles.csv
+AVERAGE WC
+   COMMENT   636
+NO COMMENT   169
+```
