@@ -385,3 +385,28 @@ Output:
 Mark 80 38 40
 Exiting program...
 ```
+
+Sometimes we would like to output the results stdout into another file. We created a file in `dumps/dump.data` to append results.
+
+`#OutputData.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Append rows to an output file
+{
+	# Awk chooses to append/create option the first time a file is opened
+	# if you wish to create the file at runtime switch to '>'
+	print $0 >> "dumps/dump.data";
+}
+```
+
+Running the file we can append results line by line...
+
+```sh
+$ ./OutputData.awk 
+Sotiri 20 30
+James 49 78
+Chris 32 86
+```
+
