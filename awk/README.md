@@ -524,3 +524,72 @@ Array at index 5 has value Michelle
 Array does not contain index 6
 Array at index 7 has value Tom
 ```
+
+Another use case for arrays in awk is to do a word count of a particular column. The associative nature allows us to have `array[name] = count`.
+
+Suppose we had the following input data and we wanted to count the number of occurances of each phone brand.
+
+`#data/phones.csv`
+
+```sh
+iphone,579,Y
+nokia,100,Y
+iphone,940,Y
+samsung,1000,N
+iphone,780,N
+nokia,120,Y
+htc,230,N
+iphone,,N
+motorola,299,Y
+samsung,980,Y
+iphone,1220,N
+samsung,870,Y
+iphone,930,Y
+nokia,,N
+```
+
+`#ArrayCounter.awk`
+
+```awk
+#!/usr/bin/awk -f
+
+# Use the associative nature of arrays in awk as a word counter
+BEGIN {
+	# Delim comma
+	FS = ",";
+	# Output delim also comma
+	OFS = ",";
+}
+{
+	# Inc for every count of the word occurance
+	freq[$1]++;
+}
+END {
+	# Print the word and its count
+	for (x in freq) {
+		print x, freq[x];
+	}
+}
+```
+
+Running the program we get the following output:
+
+```sh
+$ ./ArrayCounter.awk ../data/phones.csv 
+iphone,6
+motorola,1
+samsung,3
+htc,1
+nokia,3
+```
+
+This is a good opportunity to use the `sort` command line tool to sort by second column. Note `-t ,` argument specifies that the data is comma sep and `-k 2` specifies the second column.
+
+```sh
+$ ./ArrayCounter.awk ../data/phones.csv | sort -t, -k2r
+iphone,6
+nokia,3
+samsung,3
+htc,1
+motorola,1
+```
