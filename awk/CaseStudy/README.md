@@ -2,7 +2,7 @@
 
 dataset can be found in `#data/articles.csv`.
 
-This tutorial we will aim to do data analysis in `awk` and combining all other shell tools such as `grep`, `cut`, `uniq`, `sort` etc.
+In this tutorial, we will aim to do data analysis in `awk` and combining all other shell tools such as `grep`, `cut`, `uniq`, `sort` etc.
 
 ### Preview of data
 
@@ -21,7 +21,7 @@ In the following subsections we aim to ask some typical data analytical question
 We can use the `NR` builtin variable (Number Records) to filter out the header with `NR > 1`.
 
 ```sh
-awk -F "," '{ if (NR > 1) print $1}' articles.csv | sort -n | uniq -c | sort -nr | head -n 5
+$ awk -F "," '{ if (NR > 1) print $1}' articles.csv | sort -n | uniq -c | sort -nr | head -n 5
 ```
 
 Output:
@@ -38,5 +38,37 @@ Explanation:
 
 First awk code prints all rows except the first (header), then sorts by the date `sort -n`. The `uniq -c` is used as a counter tool, and `sort -nr` then sorts by the count in desc order. Finally `head -n 5` takes the top 5 counts.
 
+#### What is the average word count per article posted?
 
+Here we use `NF` (number of fields) to quickly determine where the word count column is in the data (as its the last one $NF will print the last column).
+
+```awk
+#!/usr/bin/awk -f
+
+# We compute the average word count. Word count is the last field so we can use $NF (number of fields)
+BEGIN {
+	FS = ",";
+	# Declare counter
+	count = 0;
+}
+{
+	# Ignore First row:
+	if (NR == 1) {
+		# Skips row
+		next;
+	}
+	# $NF will print last field, which is word count
+	count += $NF;
+}
+END {
+	printf("%8s %5d\n", "AVG WC", count / NR);
+}
+```
+
+Running the program we get the following output:
+
+```sh
+$ ./AverageWordCount.awk articles.csv
+AVG WC   881
+```
 
